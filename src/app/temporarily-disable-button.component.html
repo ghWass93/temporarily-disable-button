@@ -1,0 +1,54 @@
+<mat-card class="example-card">
+  <mat-card-subtitle>Tips/Tricks Examples</mat-card-subtitle>
+  <mat-card-title>Temporarily disable button</mat-card-title>
+  <mat-card-content>
+    <br />
+    <p>
+      <strong
+        >Click on 'Action' button and wait for it's next activation.</strong
+      >
+    </p>
+    <p>Control the time of next activation by using slider.</p>
+    <p>Note: You can force it's activation using 'Reset' button.</p>
+    <p>
+      <ng-container *ngIf="lastClick">
+        State: <br />
+        &nbsp; &nbsp; last click: {{ lastClick | date: 'H:mm:ss' }} <br />
+        &nbsp; &nbsp; next activation at: {{ nextActivation | date: 'H:mm:ss' }}
+        <br />
+      </ng-container>
+      <ng-container *ngIf="!lastClick"> State: Inactif </ng-container>
+    </p>
+  </mat-card-content>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions class="example-button-row">
+    <button
+      class="p-5"
+      mat-fab
+      color="accent"
+      [disabled]="!isEnabled"
+      (click)="onAction()"
+    >
+      Action
+    </button>
+    <button mat-fab color="primary" [disabled]="isEnabled" (click)="reset()">
+      Reset
+    </button>
+    <mat-slider
+      thumbLabel
+      [(ngModel)]="waitFor"
+      [displayWith]="waitForFormat"
+      tickInterval="1000"
+      step="1"
+      min="0"
+      max="120"
+      aria-label="units"
+    ></mat-slider>
+  </mat-card-actions>
+  <mat-card-footer>
+    <mat-progress-bar
+      mode="determinate"
+      [value]="remainedTimeByPercent"
+    ></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>
